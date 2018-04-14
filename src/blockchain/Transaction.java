@@ -1,13 +1,15 @@
 package blockchain;
 
-import java.util.concurrent.ThreadLocalRandom;
+import java.util.Random;
+import java.time.format.DateTimeFormatter;  
+import java.time.LocalDateTime; 
 
 public class Transaction {
 
 	public static final int MAX_VALUE = 63;
 	
 	// random number concatenated to the transaction identification (string)
-	private int randomNum = ThreadLocalRandom.current().nextInt(1, MAX_VALUE+1);
+	Random random = new Random();
 	
 	private int index;		// index of the transaction in the list
 	
@@ -21,8 +23,11 @@ public class Transaction {
 		
 	private String signature_source;	// signature of the transmitter
 
+	public Transaction(String destination, int sum) {
+		timestamp = "2018/04/14 13:16:46";
+	}
 	
 	public String getTransaction(String source, String destination) {
-		return source + "-" + destination + " :" + randomNum;
+		return source + "-" + destination + " :" + random.nextInt(MAX_VALUE);
 	}
 }

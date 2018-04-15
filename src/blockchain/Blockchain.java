@@ -13,11 +13,7 @@ public class Blockchain {
 	public Blockchain(int difficulty, int numblocks) {
 		
 		List<Block> blockchain = new ArrayList<Block>();	// list of blocks
-
-		
-		genesis = null;
-		genesis.setNonce(0);
-		genesis.setPrehash("0");
+		Genesis genesis = new Genesis();
 		blockchain.add(genesis);
 	}
 	

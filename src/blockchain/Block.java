@@ -18,11 +18,13 @@ public class Block {
 	
 	private String roothash;	// root hash of the merkle tree
 	
-	private String hash;	// hash of the current block
+	public String hash;	// hash of the current block
 	
-	private int nonce;	// a field whose value is set so that the hash of the block will contain a run of leading zeros
+	public int nonce;	// a field whose value is set so that the hash of the block will contain a run of leading zeros
 	
-	
+	public Block() {
+		timestamp = "2018/04/14 13:16:46";
+	}
 	
 	public int getNonce() {
 		return nonce;

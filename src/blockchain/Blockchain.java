@@ -19,6 +19,14 @@ public class Blockchain {
 	
 	// Verifying that the BC is valid and hasn't been altered
 	public boolean verifGenesis(List<Block> b) {
-		return (b.get(0).getPrehash() == "0");
+		return (b.get(0) instanceof Genesis);
+	}
+	
+	public boolean verifHash(List<Block> l) {
+		for (int i = 1; i < l.size(); i++) {
+			if (l.get(i).getPrehash() != l.get(i-1).getHash())
+				return false;
+		}
+		return true;
 	}
 }

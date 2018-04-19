@@ -39,6 +39,10 @@ public class Block {
 		return hash;
 	}
 	
+	public List<Transaction> getTransaction_list() {
+		return transaction_list;
+	}
+
 	public void setHash(String hash) {
 		this.hash = hash;
 	}
@@ -71,12 +75,23 @@ public class Block {
 		return roothash;
 	}
 	
-	public String concatenate(Block b) {
-		return (String.valueOf(b.getIndex()) + b.getTimestamp() + b.getPrehash() + String.valueOf(b.getNumtransactions()) + b.getRoothash() + b.getNonce());
+	//Concatenate all the transactions of the block
+	public String concatenateTransaction(Block b) {
+		String outcome = "";
+		List<Transaction> list = b.getTransaction_list();
+		for (int i = 0; i < list.size(); i++) {
+			outcome += list.get(i).getTransaction();
+		}
+		return outcome;
+	}
+	
+	//Concatenate all the attributes of the block to hash it
+	public String concatenateHash(Block b) {
+		return (String.valueOf(b.getIndex()) + b.getTimestamp() + b.getPrehash() + String.valueOf(b.getNumtransactions()) + concatenateTransaction(b) + b.getRoothash() + b.getNonce());
 	}
 	
 	public void computeHash(Block b) {
-		b.setHash(Hash.applySha256(concatenate(b)));
+		b.setHash(Hash.applySha256(concatenateHash(b)));
 	}
 
 

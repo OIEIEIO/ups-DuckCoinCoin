@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 
 public class Transaction {
 
-	public static final int MAX_VALUE = 63;
+	public static final int MAX_VALUE = 10;
 	
 	// random number concatenated to the transaction identification (string)
 	Random random = new Random();
@@ -15,9 +15,9 @@ public class Transaction {
 	
 	private String timestamp;	// date of creation of the transaction
 	
-	private String source;		// hexadecimal address of the transmitter
+	public String source;		// hexadecimal address of the transmitter
 	
-	private String destination;		// hexadecimal address of the receiver
+	public String destination;		// hexadecimal address of the receiver
 	
 	private int sum;	// transaction sum
 		
@@ -27,7 +27,7 @@ public class Transaction {
 		timestamp = "2018/04/14 13:16:46";
 	}
 	
-	public String getTransaction(String source, String destination) {
+	public String getTransaction() {
 		return source + "-" + destination + " :" + random.nextInt(MAX_VALUE);
 	}
 }

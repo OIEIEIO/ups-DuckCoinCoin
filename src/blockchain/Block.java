@@ -14,7 +14,7 @@ public class Block {
 	
 	Random random = new Random();
 	
-	private int numtransactions;	// number of transactions
+	protected int numtransactions;	// number of transactions
 	
 	List<Transaction> transaction_list = new ArrayList<Transaction>();	// list of transactions
 	

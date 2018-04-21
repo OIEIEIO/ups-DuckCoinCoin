@@ -26,9 +26,12 @@ public class Block {
 	
 	public Block() {
 		
+		nonce = 0;
 		timestamp = "2018/04/14 13:16:46";
 		numtransactions = random.nextInt(11);
-		Transaction transaction_list[] = new Transaction[numtransactions];
+	//	Transaction transaction_list[] = new Transaction[numtransactions];
+	// TODO transaction a list or an array?
+		List<Transaction> transaction_list = new ArrayList<Transaction>();	// list of transactions
 	}
 	
 	public int getNonce() {
@@ -86,13 +89,17 @@ public class Block {
 	}
 	
 	//Concatenate all the attributes of the block to hash it
-	public String concatenateHash(Block b) {
-		return (String.valueOf(b.getIndex()) + b.getTimestamp() + b.getPrehash() + String.valueOf(b.getNumtransactions()) + concatenateTransaction(b) + b.getRoothash() + b.getNonce());
+	public String concatenateHash(Block b, int difficulty) {
+		String numZero = "";
+		for (int i = 0; i < difficulty; i++) {
+			numZero += "0";
+		}
+		return (numZero + String.valueOf(b.getIndex()) + b.getTimestamp() + b.getPrehash() + String.valueOf(b.getNumtransactions())
+		+ concatenateTransaction(b) + b.getRoothash() + b.getNonce());
 	}
 	
-	public void computeHash(Block b) {
-		b.setHash(Hash.applySha256(concatenateHash(b)));
+	public void computeHash(Block b, int difficulty) {
+		b.setHash(Hash.applySha256(concatenateHash(b, difficulty)));
 	}
-
 
 }

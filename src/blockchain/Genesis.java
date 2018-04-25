@@ -2,8 +2,11 @@ package blockchain;
 
 public class Genesis extends Block {
 	
-	private int numtransactions = 1;
+	private int numtransactions;
+	
 	public Genesis() {
+		
+		this.numtransactions = 1;
 		super.prehash = "0";
 	}
 }

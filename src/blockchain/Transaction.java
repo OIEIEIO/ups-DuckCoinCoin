@@ -44,7 +44,7 @@ public class Transaction {
 		return destination;
 	}
 
-	public String convertTime(long time){
+	public String convertTime(long time) {
 	    Date date = new Date(time);
 	    Format format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	    return format.format(date);

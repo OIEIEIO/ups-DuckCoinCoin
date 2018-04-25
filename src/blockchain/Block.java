@@ -15,7 +15,7 @@ public class Block {
 	protected String prehash;		//hash of the previous block
 	Random random = new Random();
 	protected int numtransactions;	//number of transactions
-	List<Transaction> transaction_list = new ArrayList<Transaction>();	//list of transactions
+	List<Transaction> transaction_list;	//list of transactions
 	private String roothash;	//root hash of the merkle tree
 	protected String hash;	//hash of the current block
 	protected int nonce;	//a field whose value is set so that the hash of the block will contain a run of leading zeros
@@ -27,7 +27,7 @@ public class Block {
 		this.timestamp = convertTime(longtime);
 		this.numtransactions = random.nextInt(11);
 		this.transaction_list = new ArrayList<Transaction>();	//list of transactions
-		this.hash = computeHash(1);
+		this.hash = computeHash(2);
 	}
 	
 	public int getNonce() {
@@ -84,21 +84,23 @@ public class Block {
 		return outcome;
 	}
 	
-	//Concatenate all the attributes of the block to hash it
+	//Concatenate all the attributes of the block
 	public String concatenateHash(int difficulty) {
 		String numZero = "";
 		for (int i = 0; i < difficulty; i++) {
 			numZero += "0";
 		}
-		return (numZero + String.valueOf(this.getIndex()) + this.getTimestamp() + this.getPrehash() + String.valueOf(this.getNumtransactions())
-		+ concatenateTransaction() + this.getRoothash() + this.getNonce());
+		return (numZero + String.valueOf(this.getIndex()) + this.getTimestamp() + this.getPrehash()
+		+ String.valueOf(this.getNumtransactions()) + concatenateTransaction() + this.getRoothash()
+		+ this.getNonce());
 	}
 	
+	//Return hash of block
 	public String computeHash(int difficulty) {
 		return Hash.applySha256(concatenateHash(difficulty));
 	}
 
-	public String convertTime(long time){
+	public String convertTime(long time) {
 	    Date date = new Date(time);
 	    Format format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	    return format.format(date);

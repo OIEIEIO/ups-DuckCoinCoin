@@ -8,7 +8,7 @@ public class Blockchain {
 	public int difficulty; //mining difficulty
 	private int numblocks; //number of blocks
 	private Block genesis;
-	List<Block> blockchain = new ArrayList<Block>();	//list of blocks
+	List<Block> blockchain;	//list of blocks
 	
 	public int getDifficulty() {
 		return difficulty;
@@ -20,9 +20,9 @@ public class Blockchain {
 
 	public Blockchain(int difficulty, int numblocks) {
 		
-		List<Block> blockchain = new ArrayList<Block>();	//list of blocks
+		this.blockchain = new ArrayList<Block>();	//list of blocks
 		Genesis genesis = new Genesis();
-		blockchain.add(genesis);
+		this.blockchain.add(genesis);
 	}
 	
 	//Verify if the first block is the genesis block

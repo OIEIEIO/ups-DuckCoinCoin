@@ -10,11 +10,11 @@ public class MerkleTree {
 		
 		if (numtransactions % 2 == 0) {
 			for (int i = 0; i < list.size(); i++) {
-				Hash.applySha256();
+				//Hash.applySha256();
 			}
 		} else {
 			for (int i = 0; i < list.size(); i++) {
-				Hash.applySha256();
+				//Hash.applySha256();
 			}
 		}
 	}

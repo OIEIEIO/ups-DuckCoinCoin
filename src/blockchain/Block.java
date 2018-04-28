@@ -27,7 +27,6 @@ public class Block {
 		this.timestamp = convertTime(longtime);
 		this.numtransactions = random.nextInt(11);
 		this.transaction_list = new ArrayList<Transaction>();	//list of transactions
-		this.hash = computeHash(2);
 	}
 	
 	public int getNonce() {
@@ -75,7 +74,7 @@ public class Block {
 	}
 	
 	//Concatenate all the transactions of the block
-	public String concatenateTransaction() {
+	public String concatenateBlockTransaction() {
 		String outcome = "";
 		List<Transaction> list = this.getTransaction_list();
 		for (int i = 0; i < list.size(); i++) {
@@ -85,19 +84,10 @@ public class Block {
 	}
 	
 	//Concatenate all the attributes of the block
-	public String concatenateHash(int difficulty) {
-		String numZero = "";
-		for (int i = 0; i < difficulty; i++) {
-			numZero += "0";
-		}
-		return (numZero + String.valueOf(this.getIndex()) + this.getTimestamp() + this.getPrehash()
-		+ String.valueOf(this.getNumtransactions()) + concatenateTransaction() + this.getRoothash()
+	public String concatenateHash() {
+		return (String.valueOf(this.getIndex()) + this.getTimestamp() + this.getPrehash()
+		+ String.valueOf(this.getNumtransactions()) + concatenateBlockTransaction() + this.getRoothash()
 		+ this.getNonce());
-	}
-	
-	//Return hash of block
-	public String computeHash(int difficulty) {
-		return Hash.applySha256(concatenateHash(difficulty));
 	}
 
 	public String convertTime(long time) {
@@ -105,4 +95,45 @@ public class Block {
 	    Format format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	    return format.format(date);
 	}
+	
+	public boolean verifyDifficulty(String s, int difficulty) {
+		String numZero = "";
+		for (int i = 0; i < difficulty; i++) {
+			numZero += "0";
+		}
+		if (s.matches(numZero)) {
+			return true;
+		}
+		return false;
+	}
+	
+	public String mining(int difficulty) {
+		String outcome;
+		do {
+			++nonce;
+			outcome = Hash.applySha256(concatenateHash());
+		} while (!verifyDifficulty(outcome, difficulty));
+		return outcome;
+	}
+	
+	//TODO
+	public String merkleTree() {
+		if (this.numtransactions % 2 == 0) {
+			for (int i = 0; i < this.getTransaction_list().size(); i++) {
+				//Hash.applySha256();
+			}
+		} else {
+			for (int i = 0; i < this.getTransaction_list().size(); i++) {
+				//Hash.applySha256();
+			}
+		}
+		return null;
+	}
+	
+/*	public void generateTransaction() {
+		for (int i = 0; i < this.getNumtransactions(); i++) {
+			Transaction t = new Transaction();
+			this.transaction_list.add(e);
+		}
+	}*/
 }

@@ -10,6 +10,14 @@ public class Blockchain {
 	private Block genesis;
 	List<Block> blockchain;	//list of blocks
 	
+	public Blockchain(int difficulty, int numblocks) {
+		
+		this.numblocks = numblocks;
+		this.blockchain = new ArrayList<Block>();	//list of blocks
+		Genesis genesis = new Genesis();
+		this.blockchain.add(genesis);
+	}
+	
 	public int getDifficulty() {
 		return difficulty;
 	}
@@ -18,16 +26,9 @@ public class Blockchain {
 		return blockchain;
 	}
 
-	public Blockchain(int difficulty, int numblocks) {
-		
-		this.blockchain = new ArrayList<Block>();	//list of blocks
-		Genesis genesis = new Genesis();
-		this.blockchain.add(genesis);
-	}
-	
 	//Verify if the first block is the genesis block
-	public boolean verifGenesis(List<Block> b) {
-		return (b.get(0) instanceof Genesis);
+	public boolean verifGenesis(Blockchain bc) {
+		return (bc.getBlockchain().get(0) instanceof Genesis);
 	}
 	
 	//Verify if each block contains the previous hash
@@ -37,31 +38,5 @@ public class Blockchain {
 				return false;
 		}
 		return true;
-	}
-	
-	//Count how many "0" in a row at the beginning of hash
-	public int countZero(Block b) {
-		int count = 0, i = 0, j = 1;
-		String h = b.getHash();
-		do {
-			++count;
-		} while (h.substring(++i, ++j) == "0");
-		return count;
-	}
-	
-	//Compute the hash again if it doesn't pass the test
-	public void mining(Blockchain b) {
-		int n; //nonce
-		List<Block> bl = b.getBlockchain();
-		for (int i = 0; i < bl.size(); i++) {
-			n = bl.get(i).getNonce();
-			if (countZero(bl.get(i)) < b.getDifficulty()) {
-				do {
-					bl.get(i).setNonce(++n);
-					// TODO recommencer le calcul du hash
-				} while (countZero(bl.get(i)) < b.getDifficulty());
-			}
-		}
-
 	}
 }

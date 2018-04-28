@@ -12,41 +12,51 @@ public class Transaction {
 	public static final int MAX_VALUE = 10;
 	//random number concatenated to the transaction identification (string)
 	Random random = new Random();
+	private int randomNumber;	//Random number lower than MAX_VALUE to put at the end of transaction
 	private int index;		//index of the transaction in the list
 	private String timestamp;	//date of creation of the transaction (String)
 	private long longtime;	//date of creation of the transaction (long)
-	private String source;		//hexadecimal address of the transmitter
-	private String destination;		//hexadecimal address of the receiver
+	private String sender;		//hexadecimal address of the sender
+	private String receiver;		//hexadecimal address of the receiver
 	private int sum;	//transaction sum
-	private String signature_source;	//signature of the transmitter
+	private String signature_sender;	//signature of the sender
 
-	public Transaction(String source, String destination, int sum) {
-		this.source = source;
-		this.destination = destination;
+	public Transaction() {
+		this.sender = sender;
+		this.receiver = receiver;
+		this.randomNumber = random.nextInt(MAX_VALUE);
 		this.sum = sum;
 		this.longtime = new Date().getTime();
 		this.timestamp = convertTime(longtime);
 	}
 	
 	public String getTransaction() {
-		return source + "-" + destination + " :" + random.nextInt(MAX_VALUE);
+		return sender + "-" + receiver + " :" + randomNumber;
 	}
 	
 	public int getSum() {
 		return sum;
 	}
 
-	public String getSource() {
-		return source;
+	public String getSender() {
+		return sender;
 	}
 
-	public String getDestination() {
-		return destination;
+	public String getReceiver() {
+		return receiver;
+	}
+	
+	public int getRandomNumber() {
+		return randomNumber;
 	}
 
 	public String convertTime(long time) {
 	    Date date = new Date(time);
 	    Format format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	    return format.format(date);
+	}
+	
+	public String concatenateTransaction() {
+		return (this.getSender() + this.getReceiver() + this.getRandomNumber());
 	}
 }

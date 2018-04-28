@@ -6,5 +6,6 @@ public class Genesis extends Block {
 		
 		this.numtransactions = 1;
 		this.prehash = "0";
+		this.hash = "0";
 	}
 }

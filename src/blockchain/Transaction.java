@@ -20,14 +20,9 @@ public class Transaction {
 	private String receiver;		//hexadecimal address of the receiver
 	private int sum;	//transaction sum
 	private String signature_sender;	//signature of the sender
-
+	
 	public Transaction() {
-		this.sender = sender;
-		this.receiver = receiver;
 		this.randomNumber = random.nextInt(MAX_VALUE);
-		this.sum = sum;
-		this.longtime = new Date().getTime();
-		this.timestamp = convertTime(longtime);
 	}
 	
 	public String getTransaction() {
@@ -42,10 +37,18 @@ public class Transaction {
 		return sender;
 	}
 
+	public void setSender(String sender) {
+		this.sender = sender;
+	}
+
 	public String getReceiver() {
 		return receiver;
 	}
 	
+	public void setReceiver(String receiver) {
+		this.receiver = receiver;
+	}
+
 	public int getRandomNumber() {
 		return randomNumber;
 	}

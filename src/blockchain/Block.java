@@ -19,6 +19,7 @@ public class Block {
 	private String roothash;	//root hash of the merkle tree
 	protected String hash;	//hash of the current block
 	protected int nonce;	//a field whose value is set so that the hash of the block will contain a run of leading zeros
+	static final String DICT = "abcdefghijklmnopqrstuvwxyz";	//Dictionary of possible characters for randomized string
 	
 	public Block() {
 		
@@ -130,10 +131,19 @@ public class Block {
 		return null;
 	}
 	
-/*	public void generateTransaction() {
+	public String randomString(int len) {
+		   StringBuilder sb = new StringBuilder(len);
+		   for(int i = 0; i < len; i++)
+		      sb.append(DICT.charAt(random.nextInt(DICT.length())));
+		   return sb.toString();
+		}
+	
+	public void generateTransactions() {
 		for (int i = 0; i < this.getNumtransactions(); i++) {
 			Transaction t = new Transaction();
-			this.transaction_list.add(e);
+			t.setSender(randomString(5));
+			t.setReceiver(randomString(5));
+			this.transaction_list.add(t);
 		}
-	}*/
+	}
 }

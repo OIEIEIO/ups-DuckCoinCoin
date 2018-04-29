@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Blockchain {
 	
-	public int difficulty; //mining difficulty
+	public static int difficulty; //mining difficulty
 	private int numblocks; //number of blocks
 	private Block genesis;
 	List<Block> blockchain;	//list of blocks
@@ -16,6 +16,10 @@ public class Blockchain {
 		this.blockchain = new ArrayList<Block>();	//list of blocks
 		Genesis genesis = new Genesis();
 		this.blockchain.add(genesis);
+	}
+	
+	public int getNumblocks() {
+		return numblocks;
 	}
 	
 	public int getDifficulty() {
@@ -38,5 +42,26 @@ public class Blockchain {
 				return false;
 		}
 		return true;
+	}
+	
+	public static Block createBlock(int difficulty) {
+		Block b = new Block();
+		b.generateTransactions();
+		b.setHash(b.mining(difficulty));
+		return b;
+	}
+	
+	public static Blockchain createBlockchain(int difficulty, int numblocks) {
+		Blockchain bc = new Blockchain(difficulty, numblocks);
+		for (int i = 1; i < numblocks; i++) {
+			bc.blockchain.add( createBlock(difficulty) );
+		}
+		return bc;
+	}
+	
+	public void printBlockchain() {
+		for (int i = 0; i < this.getNumblocks(); i++) {
+			System.out.println("Nonce: " + this.getBlockchain().get(i).getNonce());
+		}
 	}
 }

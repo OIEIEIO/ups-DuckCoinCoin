@@ -27,11 +27,15 @@ public class Block {
 		this.longtime = new Date().getTime();
 		this.timestamp = convertTime(longtime);
 		this.numtransactions = random.nextInt(11);
-		this.transaction_list = new ArrayList<Transaction>();	//list of transactions
+		this.transaction_list = new ArrayList<Transaction>(); //list of transactions
 	}
 	
 	public int getNonce() {
 		return nonce;
+	}
+	
+	public void setNonce(int value) {
+		nonce = value;
 	}
 	
 	public String getHash() {
@@ -44,10 +48,6 @@ public class Block {
 
 	public void setHash(String hash) {
 		this.hash = hash;
-	}
-	
-	public void setNonce(int value) {
-		nonce = value;
 	}
 	
 	public int getIndex() {

@@ -47,6 +47,8 @@ public class Blockchain {
 	public static Blockchain createBlockchain(int difficulty, int numblocks) {
 		
 		Blockchain bc = new Blockchain(difficulty, numblocks);
+
+		//Generate blocks
 		for (int i = 1; i < numblocks; i++) {
 			bc.blockchain.add( Block.createBlock(difficulty) );
 			bc.getBlockchain().get(i).setPrehash(bc.getBlockchain().get(i-1).getHash());
@@ -61,6 +63,11 @@ public class Blockchain {
 			System.out.println("nonce: " + this.getBlockchain().get(i).getNonce());
 			System.out.println("timestamp: " + this.getBlockchain().get(i).getTimestamp());
 			System.out.println("prehash: " + this.getBlockchain().get(i).getPrehash());
+			System.out.println();
+			System.out.println("Block " + i + " - Transactions");
+			for (int j = 0; j < this.getBlockchain().get(i).getNumtransactions(); j++) {
+				System.out.println(this.getBlockchain().get(i).getTransaction_list().get(j).getTransaction());
+			}
 			System.out.println();
 		}
 	}

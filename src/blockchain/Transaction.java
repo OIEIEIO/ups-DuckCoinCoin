@@ -62,6 +62,9 @@ public class Transaction {
 	}
 	
 	public String concatenateTransaction() {
-		return (this.getSender() + this.getReceiver() + this.getRandomNumber());
+		if (this.getSender() == null) {
+			return "Genesis";
+		}
+		return ( this.getSender() + this.getReceiver() + this.getRandomNumber() );
 	}
 }

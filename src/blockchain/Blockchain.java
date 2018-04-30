@@ -50,8 +50,14 @@ public class Blockchain {
 
 		//Generate blocks
 		for (int i = 1; i < numblocks; i++) {
-			bc.blockchain.add( Block.createBlock(difficulty) );
-			bc.getBlockchain().get(i).setPrehash(bc.getBlockchain().get(i-1).getHash());
+			
+			Block b = new Block();
+			b.setIndex(i);
+			b.generateTransactions();
+			b.setPrehash(bc.getBlockchain().get(i - 1).getHash());
+			b.setRoothash(b.merkleTree());
+			b.setHash(b.mining(difficulty));
+			bc.blockchain.add(b);
 		}
 		return bc;
 	}
@@ -59,6 +65,8 @@ public class Blockchain {
 	public void printBlockchain() {
 		for (int i = 0; i < this.getNumblocks(); i++) {
 			System.out.println("Block " + i);
+			System.out.println("index: " + this.getBlockchain().get(i).getIndex());
+			System.out.println("roothash: " + this.getBlockchain().get(i).getRoothash());
 			System.out.println("hash: " + this.getBlockchain().get(i).getHash());
 			System.out.println("nonce: " + this.getBlockchain().get(i).getNonce());
 			System.out.println("timestamp: " + this.getBlockchain().get(i).getTimestamp());

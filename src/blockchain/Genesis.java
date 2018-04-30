@@ -10,6 +10,7 @@ public class Genesis extends Block {
 		
 		this.numtransactions = 1;
 		this.prehash = "0";
+		this.roothash = "0";
 		this.hash = "0";
 		this.transaction_list = new ArrayList<Transaction>(); //list of transactions
 		transactionGenesis = new Transaction();

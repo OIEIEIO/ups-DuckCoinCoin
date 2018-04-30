@@ -16,7 +16,7 @@ public class Block {
 	Random random = new Random();
 	protected int numtransactions;	//number of transactions
 	List<Transaction> transaction_list;	//list of transactions
-	private String roothash;	//root hash of the merkle tree
+	protected String roothash;	//root hash of the merkle tree
 	protected String hash;	//hash of the current block
 	protected int nonce;	//a field whose value is set so that the hash of the block will contain a run of leading zeros
 	static final String DICT = "abcdefghijklmnopqrstuvwxyz";	//Dictionary of possible characters for randomized string
@@ -26,7 +26,7 @@ public class Block {
 		this.nonce = 0;
 		this.longtime = new Date().getTime();
 		this.timestamp = convertTime(longtime);
-		this.numtransactions = random.nextInt(11);
+		this.numtransactions = random.nextInt(10) + 1;
 		this.transaction_list = new ArrayList<Transaction>(); //list of transactions
 	}
 	
@@ -46,12 +46,20 @@ public class Block {
 		return transaction_list;
 	}
 
+	public void setTransaction_list(List<Transaction> transaction_list) {
+		this.transaction_list = transaction_list;
+	}
+
 	public void setHash(String hash) {
 		this.hash = hash;
 	}
 	
 	public int getIndex() {
 		return index;
+	}
+	
+	public void setIndex(int index) {
+		this.index = index;
 	}
 	
 	public int getNumtransactions() {
@@ -72,6 +80,10 @@ public class Block {
 	
 	public String getRoothash() {
 		return roothash;
+	}
+	
+	public void setRoothash(String roothash) {
+		this.roothash = roothash;
 	}
 	
 	//Concatenate all the transactions of the block
@@ -121,18 +133,50 @@ public class Block {
 		return outcome;
 	}
 	
-	//TODO
-	public String merkleTree() {
-		if (this.numtransactions % 2 == 0) {
-			for (int i = 0; i < this.getTransaction_list().size(); i++) {
-				//Hash.applySha256();
+	private List<String> getNewNodeList(List<String> tempNodeList) {
+		
+		List<String> newNodeList = new ArrayList<String>();
+		int indexList = 0;
+		String left;
+		String right;
+		
+		while (indexList < tempNodeList.size()) {
+			//left
+			left = tempNodeList.get(indexList);
+			++indexList;
+			
+			//right
+			right = "";
+			if (indexList != tempNodeList.size()) {
+				right = tempNodeList.get(indexList);
 			}
-		} else {
-			for (int i = 0; i < this.getTransaction_list().size(); i++) {
-				//Hash.applySha256();
-			}
+			
+			//hash left and right
+			newNodeList.add( Hash.applySha256(left + right) );
+			++indexList;
 		}
-		return null;
+		
+		return newNodeList;
+	}
+	
+	public String merkleTree() {
+		
+		List<String> tempNodeList = new ArrayList<String>();
+		
+		for (int i = 0; i < this.getTransaction_list().size(); i++) {
+			tempNodeList.add( this.getTransaction_list().get(i).concatenateTransaction() );
+		}
+		
+		if (this.getNumtransactions() % 2 == 1) {
+			tempNodeList.add( tempNodeList.get(tempNodeList.size() - 1) );
+		}
+
+		List<String> newNodeList = getNewNodeList(tempNodeList);
+		while (newNodeList.size() != 1) {
+			newNodeList = getNewNodeList(newNodeList);
+		}
+		
+		return newNodeList.get(0);
 	}
 	
 	public String randomString(int len) {
@@ -149,12 +193,5 @@ public class Block {
 			t.setReceiver(randomString(5));
 			this.transaction_list.add(t);
 		}
-	}
-	
-	public static Block createBlock(int difficulty) {
-		Block b = new Block();
-		b.generateTransactions();
-		b.setHash(b.mining(difficulty));
-		return b;
 	}
 }

@@ -97,12 +97,8 @@ public class Block {
 	    return format.format(date);
 	}
 	
-	public boolean verifyDifficulty(String s, int difficulty) {
-		String numZero = "";
-		for (int i = 0; i < difficulty; i++) {
-			numZero += "0";
-		}
-		if (s.matches(numZero)) {
+	public boolean verifyDifficulty(String s, int difficulty, String numZero) {
+		if (numZero.matches(s.substring(0, difficulty))) {
 			return true;
 		}
 		return false;
@@ -110,10 +106,18 @@ public class Block {
 	
 	public String mining(int difficulty) {
 		String outcome;
+		String numZero = "";
+		
+		//Set number of zeros equal to difficulty
+		for (int i = 0; i < difficulty; i++) {
+			numZero += "0";
+		}
+		
+		//Hash the block until the hash starts with 'difficulty' zeros
 		do {
 			++nonce;
 			outcome = Hash.applySha256(concatenateHash());
-		} while (!verifyDifficulty(outcome, difficulty));
+		} while (!verifyDifficulty(outcome, difficulty, numZero));
 		return outcome;
 	}
 	
@@ -145,5 +149,12 @@ public class Block {
 			t.setReceiver(randomString(5));
 			this.transaction_list.add(t);
 		}
+	}
+	
+	public static Block createBlock(int difficulty) {
+		Block b = new Block();
+		b.generateTransactions();
+		b.setHash(b.mining(difficulty));
+		return b;
 	}
 }

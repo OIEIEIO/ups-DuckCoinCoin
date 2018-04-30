@@ -7,14 +7,14 @@ public class Blockchain {
 	
 	public static int difficulty; //mining difficulty
 	private int numblocks; //number of blocks
-	private Block genesis;
+	private Genesis genesis;
 	List<Block> blockchain;	//list of blocks
 	
 	public Blockchain(int difficulty, int numblocks) {
 		
 		this.numblocks = numblocks;
 		this.blockchain = new ArrayList<Block>();	//list of blocks
-		Genesis genesis = new Genesis();
+		genesis = new Genesis();
 		this.blockchain.add(genesis);
 	}
 	
@@ -44,24 +44,24 @@ public class Blockchain {
 		return true;
 	}
 	
-	public static Block createBlock(int difficulty) {
-		Block b = new Block();
-		b.generateTransactions();
-		b.setHash(b.mining(difficulty));
-		return b;
-	}
-	
 	public static Blockchain createBlockchain(int difficulty, int numblocks) {
+		
 		Blockchain bc = new Blockchain(difficulty, numblocks);
 		for (int i = 1; i < numblocks; i++) {
-			bc.blockchain.add( createBlock(difficulty) );
+			bc.blockchain.add( Block.createBlock(difficulty) );
+			bc.getBlockchain().get(i).setPrehash(bc.getBlockchain().get(i-1).getHash());
 		}
 		return bc;
 	}
 	
 	public void printBlockchain() {
 		for (int i = 0; i < this.getNumblocks(); i++) {
-			System.out.println("Nonce: " + this.getBlockchain().get(i).getNonce());
+			System.out.println("Block " + i);
+			System.out.println("hash: " + this.getBlockchain().get(i).getHash());
+			System.out.println("nonce: " + this.getBlockchain().get(i).getNonce());
+			System.out.println("timestamp: " + this.getBlockchain().get(i).getTimestamp());
+			System.out.println("prehash: " + this.getBlockchain().get(i).getPrehash());
+			System.out.println();
 		}
 	}
 }

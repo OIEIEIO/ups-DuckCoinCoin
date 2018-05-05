@@ -43,12 +43,25 @@ public class Blockchain {
 	}
 	
 	//================================================================================
-    // Methods
-    //================================================================================
-
-	//Verify if the first block is the genesis block
+	// Verify (Level 1)
+	//================================================================================
+	
+	//Verify that the first block is the genesis block
 	public boolean verifGenesis() {
 		return (this.getBlockchain().get(0) instanceof Genesis);
+	}
+	
+	//Verify that each block's root hash is correct (by computing it again)
+	public boolean verifRoothash() {
+		
+		for (int i = 1; i < this.getBlockchain().size(); i++) {
+			
+			if ( !this.getBlockchain().get(i).getRoothash().equals(this.getBlockchain().get(i).merkleTree()) ) {
+				System.out.println("Block " + this.getBlockchain().get(i).getIndex() + ": incorrect root hash");
+				return false;
+			}
+		}
+		return true;
 	}
 	
 	//Verify that each block's hash is correct (by computing it again)
@@ -60,7 +73,7 @@ public class Blockchain {
 			this.getBlockchain().get(i).setNonce(0);
 
 			if ( !this.getBlockchain().get(i).getHash().equals(this.getBlockchain().get(i).mining(difficulty)) ) {
-				System.out.println( "Block " + this.getBlockchain().get(i).getIndex() + " hash is incorrect" );
+				System.out.println( "Block " + this.getBlockchain().get(i).getIndex() + ": incorrect hash" );
 				return false;
 			}
 			if (this.getBlockchain().get(i).getPrehash() != this.getBlockchain().get(i-1).getHash()) {
@@ -71,6 +84,8 @@ public class Blockchain {
 		return true;
 	}
 	
+	//================================================================================
+
 	public static Blockchain createBlockchain(int difficulty, int numblocks) {
 		
 		Blockchain bc = new Blockchain(difficulty, numblocks);
@@ -106,6 +121,7 @@ public class Blockchain {
 			System.out.println();
 		}
 		System.out.println("Is the first block genesis? " + this.verifGenesis());
+		System.out.println("Is the root hash of each block correct? " + this.verifRoothash());
 		System.out.println("Is this blockchain properly chained? " + this.verifChaining(difficulty));
 	}
 }

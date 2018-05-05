@@ -9,6 +9,10 @@ import java.util.Random;
 
 public class Block {
 	
+	//================================================================================
+    // Properties
+    //================================================================================
+	
 	private int index;	//index of the block inside the blockchain
 	private String timestamp;	//date of creation of the block (String)
 	private long longtime;	//date of creation of the block (long)
@@ -21,6 +25,10 @@ public class Block {
 	protected int nonce;	//a field whose value is set so that the hash of the block will contain a run of leading zeros
 	static final String DICT = "abcdefghijklmnopqrstuvwxyz";	//Dictionary of possible characters for randomized string
 	
+	//================================================================================
+    // Constructors
+    //================================================================================
+	
 	public Block() {
 		
 		this.nonce = 0;
@@ -29,6 +37,10 @@ public class Block {
 		this.numtransactions = random.nextInt(10) + 1;
 		this.transaction_list = new ArrayList<Transaction>(); //list of transactions
 	}
+	
+	//================================================================================
+    // Accessors
+    //================================================================================
 	
 	public int getNonce() {
 		return nonce;
@@ -86,6 +98,10 @@ public class Block {
 		this.roothash = roothash;
 	}
 	
+	//================================================================================
+    // Methods
+    //================================================================================
+	
 	//Concatenate all the transactions of the block
 	public String concatenateBlockTransaction() {
 		String outcome = "";
@@ -98,9 +114,14 @@ public class Block {
 	
 	//Concatenate all the attributes of the block
 	public String concatenateHash() {
-		return (String.valueOf(this.getIndex()) + this.getTimestamp() + this.getPrehash()
-		+ String.valueOf(this.getNumtransactions()) + concatenateBlockTransaction() + this.getRoothash()
-		+ this.getNonce());
+		
+		return (String.valueOf(this.getIndex())
+				+ this.getTimestamp()
+				+ this.getPrehash()
+				+ String.valueOf(this.getNumtransactions())
+				+ this.concatenateBlockTransaction()
+				+ this.getRoothash()
+				+ this.getNonce());
 	}
 
 	public String convertTime(long time) {
@@ -117,7 +138,7 @@ public class Block {
 	}
 	
 	public String mining(int difficulty) {
-		String outcome;
+		String hash;
 		String numZero = "";
 		
 		//Set number of zeros equal to difficulty
@@ -127,10 +148,10 @@ public class Block {
 		
 		//Hash the block until the hash starts with 'difficulty' zeros
 		do {
-			++nonce;
-			outcome = Hash.applySha256(concatenateHash());
-		} while (!verifyDifficulty(outcome, difficulty, numZero));
-		return outcome;
+			this.setNonce(this.getNonce() + 1);
+			hash = Hash.applySha256(this.concatenateHash());
+		} while (!verifyDifficulty(hash, difficulty, numZero));
+		return hash;
 	}
 	
 	private List<String> getNewNodeList(List<String> tempNodeList) {

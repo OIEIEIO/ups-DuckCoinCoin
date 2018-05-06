@@ -38,7 +38,11 @@ public class Transaction {
 		if (this.getSender() == null) {
 			return "Genesis";
 		}
-		return sender + "-" + receiver + " :" + randomNumber;
+		return index + ") " + sender + "-" + receiver + " :" + randomNumber;
+	}
+	
+	public void setIndex(int index) {
+		this.index = index;
 	}
 	
 	public int getSum() {

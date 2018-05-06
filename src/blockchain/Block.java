@@ -13,17 +13,17 @@ public class Block {
 	// Properties
 	//================================================================================
 	
-	private int index;	//index of the block inside the blockchain
-	private String timestamp;	//date of creation of the block (String)
-	private long longtime;	//date of creation of the block (long)
-	protected String prehash;		//hash of the previous block
+	private int index; //index of the block inside the blockchain
+	private String timestamp; //date of creation of the block (String)
+	private long longtime; //date of creation of the block (long)
+	protected String prehash; //hash of the previous block
 	Random random = new Random();
-	protected int numtransactions;	//number of transactions
-	List<Transaction> transaction_list;	//list of transactions
-	protected String roothash;	//root hash of the merkle tree
-	protected String hash;	//hash of the current block
-	protected int nonce;	//a field whose value is set so that the hash of the block will contain a run of leading zeros
-	static final String DICT = "abcdefghijklmnopqrstuvwxyz";	//Dictionary of possible characters for randomized string
+	protected int numtransactions; //number of transactions
+	List<Transaction> transaction_list; //list of transactions
+	protected String roothash; //root hash of the merkle tree
+	protected String hash; //hash of the current block
+	protected int nonce; //a field whose value is set so that the hash of the block will contain a run of leading zeros
+	static final String DICT = "abcdefghijklmnopqrstuvwxyz"; //Dictionary of possible characters for randomized string
 	
 	//================================================================================
 	// Constructors
@@ -129,7 +129,7 @@ public class Block {
 	    Format format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	    return format.format(date);
 	}
-	
+
 	public boolean verifyDifficulty(String s, int difficulty, String numZero) {
 		if (numZero.matches(s.substring(0, difficulty))) {
 			return true;
@@ -210,6 +210,7 @@ public class Block {
 	public void generateTransactions() {
 		for (int i = 0; i < this.getNumtransactions(); i++) {
 			Transaction t = new Transaction();
+			t.setIndex(i);
 			t.setSender(randomString(5));
 			t.setReceiver(randomString(5));
 			this.transaction_list.add(t);

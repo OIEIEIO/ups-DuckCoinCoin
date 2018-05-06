@@ -130,8 +130,9 @@ public class Blockchain {
 	}
 	
 	public void printBlockchain(int difficulty) {
+		System.out.println();
 		for (int i = 0; i < this.getNumblocks(); i++) {
-			System.out.println("Block " + i);
+			System.out.println("Block " + this.getBlockchain().get(i).getIndex());
 			System.out.println("index: " + this.getBlockchain().get(i).getIndex());
 			System.out.println("roothash: " + this.getBlockchain().get(i).getRoothash());
 			System.out.println("hash: " + this.getBlockchain().get(i).getHash());

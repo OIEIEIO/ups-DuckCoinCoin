@@ -8,8 +8,8 @@ import java.text.SimpleDateFormat;
 public class Transaction {
 	
 	//================================================================================
-    // Properties
-    //================================================================================
+	// Properties
+	//================================================================================
 
 	public static final int MAX_VALUE = 10; //random number concatenated to the transaction identification (string)
 	Random random = new Random();
@@ -23,16 +23,16 @@ public class Transaction {
 	private String signature_sender; //signature of the sender
 	
 	//================================================================================
-    // Constructors
-    //================================================================================
+	// Constructors
+	//================================================================================
 	
 	public Transaction() {
 		this.randomNumber = random.nextInt(MAX_VALUE);
 	}
 	
 	//================================================================================
-    // Accessors
-    //================================================================================
+	// Accessors
+	//================================================================================
 	
 	public String getTransaction() {
 		if (this.getSender() == null) {

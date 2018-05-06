@@ -6,8 +6,8 @@ import java.util.List;
 public class Blockchain {
 	
 	//================================================================================
-    // Properties
-    //================================================================================
+	// Properties
+	//================================================================================
 	
 	public static int difficulty; //mining difficulty
 	private int numblocks; //number of blocks
@@ -15,8 +15,8 @@ public class Blockchain {
 	List<Block> blockchain;	//list of blocks
 	
 	//================================================================================
-    // Constructors
-    //================================================================================
+	// Constructors
+	//================================================================================
 	
 	public Blockchain(int difficulty, int numblocks) {
 		
@@ -27,8 +27,8 @@ public class Blockchain {
 	}
 	
 	//================================================================================
-    // Accessors
-    //================================================================================
+	// Accessors
+	//================================================================================
 	
 	public int getNumblocks() {
 		return numblocks;
@@ -71,7 +71,7 @@ public class Blockchain {
 		for (int i = 1; i < this.getBlockchain().size(); i++) {
 			
 			this.getBlockchain().get(i).setNonce(0);
-
+			
 			if ( !this.getBlockchain().get(i).getHash().equals(this.getBlockchain().get(i).mining(difficulty)) ) {
 				System.out.println( "Block " + this.getBlockchain().get(i).getIndex() + ": incorrect hash" );
 				return false;
@@ -84,6 +84,31 @@ public class Blockchain {
 		return true;
 	}
 	
+	/**
+	 * If a block is deleted or modified:
+	 * Recompute merkle root and hash
+	 * Chain blocks again
+	 * @param difficulty
+	 */
+	public void recompute(int difficulty) {
+		
+		for (int i = 1; i < this.getBlockchain().size(); i++) {
+			
+			this.getBlockchain().get(i).setNonce(0);
+			
+			//Chain blocks again
+			this.getBlockchain().get(i).setPrehash(this.getBlockchain().get(i - 1).getHash());
+			
+			//Recompute merkle root
+			this.getBlockchain().get(i).setRoothash(this.getBlockchain().get(i).merkleTree());
+			
+			//Recompute hash
+			this.getBlockchain().get(i).setHash(this.getBlockchain().get(i).mining(difficulty));
+		}
+	}
+		
+	//================================================================================
+	// Methods
 	//================================================================================
 
 	public static Blockchain createBlockchain(int difficulty, int numblocks) {
@@ -123,5 +148,6 @@ public class Blockchain {
 		System.out.println("Is the first block genesis? " + this.verifGenesis());
 		System.out.println("Is the root hash of each block correct? " + this.verifRoothash());
 		System.out.println("Is this blockchain properly chained? " + this.verifChaining(difficulty));
+		System.out.println();
 	}
 }

@@ -43,7 +43,7 @@ public class BlockChainView extends JPanel {
 		difficultyField.add(this.difficulty);
 		top.add(difficultyField);
 		
-		this.start = new JButton("Start !");
+		this.start = new JButton("Create blockchain");
 		start.addActionListener(controller);
 		top.add(this.start);
 		

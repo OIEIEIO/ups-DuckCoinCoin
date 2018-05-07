@@ -151,4 +151,31 @@ public class Blockchain {
 		System.out.println("Is this blockchain properly chained? " + this.verifChaining(difficulty));
 		System.out.println();
 	}
+	
+	public String blockchainToString(int difficulty) {
+		
+		String bc2string = "";
+		
+		for (int i = 0; i < this.getNumblocks(); i++) {
+			bc2string += ("Block " + this.getBlockchain().get(i).getIndex() + "\n");
+			bc2string += ("index: " + this.getBlockchain().get(i).getIndex() + "\n");
+			bc2string += ("roothash: " + this.getBlockchain().get(i).getRoothash() + "\n");
+			bc2string += ("hash: " + this.getBlockchain().get(i).getHash() + "\n");
+			bc2string += ("nonce: " + this.getBlockchain().get(i).getNonce() + "\n");
+			bc2string += ("timestamp: " + this.getBlockchain().get(i).getTimestamp() + "\n");
+			bc2string += ("prehash: " + this.getBlockchain().get(i).getPrehash() + "\n");
+			bc2string += "\n";
+			bc2string += ("Block " + i + " - Transactions\n");
+			for (int j = 0; j < this.getBlockchain().get(i).getNumtransactions(); j++) {
+				bc2string += (this.getBlockchain().get(i).getTransaction_list().get(j).getTransaction() + "\n");
+			}
+			bc2string += "\n";
+		}
+		bc2string += ("Is the first block genesis? " + this.verifGenesis() + "\n");
+		bc2string += ("Is the root hash of each block correct? " + this.verifRoothash() + "\n");
+		bc2string += ("Is this blockchain properly chained? " + this.verifChaining(difficulty) + "\n");
+		bc2string += "\n";
+		
+		return bc2string;
+	}
 }

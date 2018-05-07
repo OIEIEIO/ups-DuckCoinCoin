@@ -200,6 +200,11 @@ public class Block {
 		return newNodeList.get(0);
 	}
 	
+	/**
+	 * Generate random string
+	 * @param len: desired length of the string
+	 * @return random string of length 'len'
+	 */
 	public String randomString(int len) {
 		   StringBuilder sb = new StringBuilder(len);
 		   for(int i = 0; i < len; i++)

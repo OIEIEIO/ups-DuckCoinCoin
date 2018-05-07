@@ -11,15 +11,14 @@ public class Transaction {
 	// Properties
 	//================================================================================
 
-	public static final int MAX_VALUE = 10; //random number concatenated to the transaction identification (string)
+	public static final double MAX_VALUE = 10.0; //random number concatenated to the transaction identification (string)
 	Random random = new Random();
-	private int randomNumber; //Random number lower than MAX_VALUE to put at the end of transaction
+	private double sum; //Random transaction sum (lower than MAX_VALUE)
 	private int index; //index of the transaction in the list
 	private String timestamp; //date of creation of the transaction (String)
 	private long longtime; //date of creation of the transaction (long)
 	private String sender; //hexadecimal address of the sender
 	private String receiver; //hexadecimal address of the receiver
-	private int sum; //transaction sum
 	private String signature_sender; //signature of the sender
 	
 	//================================================================================
@@ -27,7 +26,9 @@ public class Transaction {
 	//================================================================================
 	
 	public Transaction() {
-		this.randomNumber = random.nextInt(MAX_VALUE);
+		this.sum = 0.1 + random.nextDouble() * (MAX_VALUE - 0.1);
+		this.longtime = new Date().getTime();
+		this.timestamp = convertTime(longtime);
 	}
 	
 	//================================================================================
@@ -35,18 +36,16 @@ public class Transaction {
 	//================================================================================
 	
 	public String getTransaction() {
+		
 		if (this.getSender() == null) {
 			return "Genesis";
 		}
-		return index + ") " + sender + "-" + receiver + " :" + randomNumber;
+		return index + ") " + sender + "-" + receiver + ": DCC " + sum + " ("
+				+ timestamp + ")";
 	}
 	
 	public void setIndex(int index) {
 		this.index = index;
-	}
-	
-	public int getSum() {
-		return sum;
 	}
 
 	public String getSender() {
@@ -65,8 +64,12 @@ public class Transaction {
 		this.receiver = receiver;
 	}
 
-	public int getRandomNumber() {
-		return randomNumber;
+	public double getSum() {
+		return sum;
+	}
+	
+	public String getTimestamp() {
+		return timestamp;
 	}
 	
 	//================================================================================
@@ -83,6 +86,6 @@ public class Transaction {
 		if (this.getSender() == null) {
 			return "Genesis";
 		}
-		return ( this.getSender() + this.getReceiver() + this.getRandomNumber() );
+		return ( this.getSender() + this.getReceiver() + this.getSum() );
 	}
 }

@@ -49,4 +49,4 @@ Because this is a blockchain generator, and they're mainly used to manage money.
 
 ### 🦆 Why duck?
 
-Because *coin* is the sound that ducks make in French.
+Because "coin" is the sound that ducks make in French.

@@ -26,7 +26,7 @@ For the moment the only way of running this is:
 
 # Screenshots
 
-![DuckCoinCoin - Blockchain generator](./docs/img/screenshot.png)
+![DuckCoinCoin - Blockchain generator](./docs/img/screenshot.PNG)
 
 ## Built With
 

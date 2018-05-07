@@ -10,20 +10,18 @@ public class App {
 	public static void main(String[] args) {
 		int difficulty = 4;
 		int numblocks = 10;
-		boolean readJSON = false;
+		boolean readJSON = false; //only set readJSON to true if you are importing a JSON file
 		
 		Blockchain bc1;
-		if (!readJSON) {
+		
+		if (!readJSON) { //then create a random blockchain from scratch
 			bc1 = Blockchain.createBlockchain(difficulty, numblocks);
-		} else { //JSON read
+		} else { //then import a blockchain from a JSON file
 			bc1 = Json.BCJsonReader("blockchain.json");
 		}
 		
 		//Print the blockchain
 		bc1.printBlockchain(difficulty);
-		
-		//Let's corrupt the blockchain
-		bc1.getBlockchain().get(2).getTransaction_list().get(0).setReceiver("aaaaabb");
 		
 		//While the blockchain is corrupted, recompute
 		while ( !bc1.verifRoothash() || !bc1.verifChaining(difficulty) ) {
@@ -45,21 +43,20 @@ public class App {
 	 */
 	public static String main(int difficulty, int numblocks) {
 
-		boolean readJSON = false;
+		boolean readJSON = false; //only set readJSON to true if you are importing a JSON file
+		String outBlockchain = "";
 		
 		Blockchain bc1;
-		if (!readJSON) {
+		
+		if (!readJSON) { //then create a random blockchain from scratch
 			bc1 = Blockchain.createBlockchain(difficulty, numblocks);
-		} else { //JSON read
+		} else { //then import a blockchain from a JSON file
 			bc1 = Json.BCJsonReader("blockchain.json");
 		}
 		
 		//Print the blockchain (return a String)
-		bc1.printBlockchain(difficulty);
-		
-		
-		//Let's corrupt the blockchain
-		bc1.getBlockchain().get(2).getTransaction_list().get(0).setReceiver("aaaaabb");
+		outBlockchain = bc1.blockchainToString(difficulty);
+
 		
 		//While the blockchain is corrupted, recompute
 		while ( !bc1.verifRoothash() || !bc1.verifChaining(difficulty) ) {
@@ -67,9 +64,9 @@ public class App {
 			bc1.recompute(difficulty);
 			
 			//Print the blockchain (return a String)
-			bc1.printBlockchain(difficulty);
+			outBlockchain += bc1.blockchainToString(difficulty);
 		}
-		System.out.println("Blockchain OK");
+		outBlockchain += "Blockchain OK\n";
 		
 		
 		//JSON write
@@ -77,6 +74,6 @@ public class App {
 			Json.BCJsonWriter(bc1, "blockchain.json");
 		}
 		
-		return bc1.blockchainToString(difficulty);
+		return outBlockchain;
 	}
 }

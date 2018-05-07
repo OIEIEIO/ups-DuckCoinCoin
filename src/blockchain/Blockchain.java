@@ -132,7 +132,9 @@ public class Blockchain {
 	public void printBlockchain(int difficulty) {
 		System.out.println();
 		for (int i = 0; i < this.getNumblocks(); i++) {
+			System.out.println("================================================================================");
 			System.out.println("Block " + this.getBlockchain().get(i).getIndex());
+			System.out.println("================================================================================");
 			System.out.println("index: " + this.getBlockchain().get(i).getIndex());
 			System.out.println("roothash: " + this.getBlockchain().get(i).getRoothash());
 			System.out.println("hash: " + this.getBlockchain().get(i).getHash());
@@ -140,7 +142,8 @@ public class Blockchain {
 			System.out.println("timestamp: " + this.getBlockchain().get(i).getTimestamp());
 			System.out.println("prehash: " + this.getBlockchain().get(i).getPrehash());
 			System.out.println();
-			System.out.println("Block " + i + " - Transactions");
+			System.out.println("Transactions");
+			System.out.println();
 			for (int j = 0; j < this.getBlockchain().get(i).getNumtransactions(); j++) {
 				System.out.println(this.getBlockchain().get(i).getTransaction_list().get(j).getTransaction());
 			}
@@ -154,10 +157,12 @@ public class Blockchain {
 	
 	public String blockchainToString(int difficulty) {
 		
-		String bc2string = "";
+		String bc2string = "\n";
 		
 		for (int i = 0; i < this.getNumblocks(); i++) {
+			bc2string += "================================================================================\n";
 			bc2string += ("Block " + this.getBlockchain().get(i).getIndex() + "\n");
+			bc2string += "================================================================================\n";
 			bc2string += ("index: " + this.getBlockchain().get(i).getIndex() + "\n");
 			bc2string += ("roothash: " + this.getBlockchain().get(i).getRoothash() + "\n");
 			bc2string += ("hash: " + this.getBlockchain().get(i).getHash() + "\n");
@@ -165,7 +170,7 @@ public class Blockchain {
 			bc2string += ("timestamp: " + this.getBlockchain().get(i).getTimestamp() + "\n");
 			bc2string += ("prehash: " + this.getBlockchain().get(i).getPrehash() + "\n");
 			bc2string += "\n";
-			bc2string += ("Block " + i + " - Transactions\n");
+			bc2string += ("Transactions\n\n");
 			for (int j = 0; j < this.getBlockchain().get(i).getNumtransactions(); j++) {
 				bc2string += (this.getBlockchain().get(i).getTransaction_list().get(j).getTransaction() + "\n");
 			}

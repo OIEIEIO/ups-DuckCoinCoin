@@ -6,7 +6,7 @@ public class BlockChainFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
 
 	public BlockChainFrame() {
-		this.setTitle("Block Chain");
+		this.setTitle("DuckCoinCoin - Blockchain generator");
 		this.setContentPane(new BlockChainView());
 		this.pack();
 		

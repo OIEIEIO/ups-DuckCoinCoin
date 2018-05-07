@@ -11,9 +11,9 @@ public class Transaction {
 	// Properties
 	//================================================================================
 
-	public static final double MAX_VALUE = 10.0; //random number concatenated to the transaction identification (string)
+	public static final int MAX_VALUE = 10; //random number concatenated to the transaction identification (string)
 	Random random = new Random();
-	private double sum; //Random transaction sum (lower than MAX_VALUE)
+	private int sum; //Random transaction sum (lower than MAX_VALUE)
 	private int index; //index of the transaction in the list
 	private String timestamp; //date of creation of the transaction (String)
 	private long longtime; //date of creation of the transaction (long)
@@ -26,7 +26,7 @@ public class Transaction {
 	//================================================================================
 	
 	public Transaction() {
-		this.sum = 0.1 + random.nextDouble() * (MAX_VALUE - 0.1);
+		this.sum = 1 + random.nextInt(MAX_VALUE);
 		this.longtime = new Date().getTime();
 		this.timestamp = convertTime(longtime);
 	}
@@ -42,6 +42,10 @@ public class Transaction {
 		}
 		return index + ") " + sender + "-" + receiver + ": DCC " + sum + " ("
 				+ timestamp + ")";
+	}
+	
+	public int getIndex() {
+		return index;
 	}
 	
 	public void setIndex(int index) {
@@ -64,7 +68,7 @@ public class Transaction {
 		this.receiver = receiver;
 	}
 
-	public double getSum() {
+	public int getSum() {
 		return sum;
 	}
 	
@@ -86,6 +90,6 @@ public class Transaction {
 		if (this.getSender() == null) {
 			return "Genesis";
 		}
-		return ( this.getSender() + this.getReceiver() + this.getSum() );
+		return ( this.getIndex() + this.getSender() + this.getReceiver() + this.getSum() );
 	}
 }

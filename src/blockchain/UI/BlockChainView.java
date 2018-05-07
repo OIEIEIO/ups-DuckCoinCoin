@@ -1,6 +1,7 @@
 package blockchain.UI;
 
 import java.awt.BorderLayout;
+import java.awt.Font;
 import java.awt.GridLayout;
 
 import javax.swing.JButton;
@@ -32,14 +33,14 @@ public class BlockChainView extends JPanel {
 		JPanel nbBlockField = new JPanel();
 		nbBlockField.setLayout(new GridLayout(1, 2));
 		this.nbBlock = new JTextField();
-		nbBlockField.add(new JLabel("Nombre de Blocs"));
+		nbBlockField.add(new JLabel("Number of blocks"));
 		nbBlockField.add(this.nbBlock);
 		top.add(nbBlockField);
 		
 		JPanel difficultyField = new JPanel();
 		difficultyField.setLayout(new GridLayout(1, 2));
 		this.difficulty = new JTextField();
-		difficultyField.add(new JLabel("Difficulté"));
+		difficultyField.add(new JLabel("Difficulty"));
 		difficultyField.add(this.difficulty);
 		top.add(difficultyField);
 		
@@ -49,6 +50,8 @@ public class BlockChainView extends JPanel {
 		
 		this.result = new JTextArea(50, 100);
 		this.result.setEditable(false);
+		this.result.setFont(new Font("Helvetica", Font.PLAIN, 14));
+		//this.result.setText(blockchainToString(int difficulty));
 
 		this.add(this.result, BorderLayout.SOUTH);
 	}

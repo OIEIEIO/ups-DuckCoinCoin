@@ -2,7 +2,7 @@
 
 Create a blockchain generator from scratch.
 
-Project of object-oriented second-year Computer Science degree at Paul Sabatier University.
+Project of object-oriented programming second-year Computer Science degree at Paul Sabatier University.
 
 # Features
 

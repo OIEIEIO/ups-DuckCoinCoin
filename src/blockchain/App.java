@@ -8,9 +8,11 @@ public class App {
 	 * No UI
 	 */
 	public static void main(String[] args) {
+		
 		int difficulty = 4;
 		int numblocks = 10;
-		boolean readJSON = false; //only set readJSON to true if you are importing a JSON file
+		boolean readJSON = false; //only set to true if you are importing a JSON file
+		boolean corruptBlockchain = true; //only set to true if you want to corrupt the blockchain
 		
 		Blockchain bc1;
 		
@@ -22,6 +24,11 @@ public class App {
 		
 		//Print the blockchain
 		bc1.printBlockchain(difficulty);
+		
+		//Corrupt the blockchain
+		if (corruptBlockchain) {
+			bc1.getBlockchain().get(2).getTransaction_list().get(0).setReceiver("aaaaabb");
+		}
 		
 		//While the blockchain is corrupted, recompute
 		while ( !bc1.verifRoothash() || !bc1.verifChaining(difficulty) ) {
